@@ -124,25 +124,4 @@
   form button:active {
     background-color: #217093;
   }
-  form .inputGroup1 .helper {
-    position: absolute;
-    z-index: 1;
-    font-family: inherit;
-  }
-  form .inputGroup1 .helper1 {
-    top: 0;
-    left: 0;
-    transform: translate(1.4em, 2.6em) scale(1);
-    transform-origin: 0 0;
-    color: #217093;
-    font-size: 1.25em;
-    font-weight: 400;
-    opacity: 0.65;
-    pointer-events: none;
-    transition: transform 0.2s ease-out, opacity 0.2s linear;
-  }
-  form .inputGroup1.focusWithText .helper {
-    /*input[type='email']:focus + .helper {*/
-    transform: translate(1.4em, 2em) scale(0.65);
-    opacity: 1;
-  }
+  
