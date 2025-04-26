@@ -1,6 +1,6 @@
 <?php
 session_start();
-require '../db/connect.php'; // Kết nối database
+require '../models/connect.php'; // Kết nối database
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $user = mysqli_real_escape_string($conn, $_POST["user"]);
@@ -18,7 +18,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_SESSION["user"] = $row["usename"];
             $_SESSION["permiss"] = $row["permiss"]; // Lưu quyền hạn từ CSDL
             
-            header("Location: ../home.php");
+            header("Location: ../views/home.php");
             exit();
         } else {
             echo "Mật khẩu không đúng!";

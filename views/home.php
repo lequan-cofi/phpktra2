@@ -7,10 +7,10 @@
 </head>
 <body>
 <?php    
-include("thanhphan/header.php");
+include("template/header.php");
     ?>
   <?php    
-include("thanhphan/footer.php");
+include("template/footer.php");
     ?>
     
 </body>

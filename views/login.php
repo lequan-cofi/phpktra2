@@ -13,7 +13,7 @@
     </style>
   </head>
   <body>
-    <form method="POST" action="xuly/xllogin.php">  
+    <form method="POST" action="../controllers/xllogin.php">  
       <?php
       // include("thanhphan/anh.php"); 
       ?>
