@@ -5,5 +5,5 @@
         session_destroy();
         
     }
-    header("location:../views/home.php");
+    header("location:../index.php");
 ?>

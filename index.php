@@ -7,10 +7,10 @@
 </head>
 <body>
 <?php    
-include("template/header.php");
+include("views/template/header.php");
     ?>
   <?php    
-include("template/footer.php");
+include("views/template/footer.php");
     ?>
     
 </body>

@@ -26,14 +26,15 @@ if (isset($_SESSION["user"])) {
     }
 
     // Hiển thị tên người dùng và nút đăng xuất
-    echo "<a href='lietke.php'>Liệt kê</a>
-        <a href='timkiem.php'> Tìm kiếm</a> &nbsp;
-          Xin chào: {$_SESSION['user']} 
-          <a href='../controllers/xllogout.php'> Đăng xuất</a>";
+   echo "<a href='lietke.php'>Liệt kê</a>
+    <a href='timkiem.php'> Tìm kiếm</a> &nbsp;
+      Xin chào: {$_SESSION['user']['usename']}
+      <a href='controllers/xllogout.php'> Đăng xuất</a>";
+
 } else {
     // Nếu chưa đăng nhập, hiển thị nút đăng nhập và đăng ký
-    echo "<a href='login.php'> Đăng nhập</a> 
-          <a href='dangky.php'> Đăng ký</a> &nbsp;";
+    echo "<a href='views/login.php'> Đăng nhập</a> 
+          <a href='views/resign.php'> Đăng ký</a> &nbsp;";
 }
 ?>
 </body>

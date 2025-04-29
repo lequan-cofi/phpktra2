@@ -13,7 +13,7 @@
     </style>
   </head>
   <body>
-    <form method="POST" action="../controllers/xllogin.php">  
+    <form method="POST" action="../controllers/xlresign.php">  
       <?php
       // include("thanhphan/anh.php"); 
       ?>
@@ -26,16 +26,16 @@
       </div>
       <div class="inputGroup inputGroup2">
         <label for="password">Password</label>
-        <input type="password" id="password" name="pass" class="password" value="" />
+        <input type="password" id="password" name="pass" value="" />
       </div>
+      
+
       <div class="inputGroup inputGroup3">
-        <label for="2FACode">2FACode</label>
-        <input type="text" id="2FACode" name="otp" class="password" value="" />
-      </div>
-      <div class="inputGroup inputGroup4">
-        <button id="login" >Log in</button>
+        <button id="Resign" >Resign</button>
       </div>
     </form>
   </body>
-  <script src="script.js"></script>
+
+  <!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="check-password.js"></script> -->
 </html>
