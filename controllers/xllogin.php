@@ -3,6 +3,12 @@ session_start();
 require '2Fa/vendor/autoload.php'; // Autoload Composer
 require '../models/connect.php'; // Kết nối database
 
+
+// Kiểm tra token CSRF
+if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
+    die("Yêu cầu không hợp lệ (CSRF token không hợp lệ).");
+}
+
 use PragmaRX\Google2FA\Google2FA;
 
 // Khởi tạo biến lần đầu
@@ -16,7 +22,7 @@ if (!isset($_SESSION['last_login_attempt'])) {
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Nếu vượt quá 5 lần trong 5 phút thì chặn
-    if ($_SESSION['login_attempts'] >= 5 && (time() - $_SESSION['last_login_attempt']) < 300) {
+    if ($_SESSION['login_attempts'] >= 5 && (time() - $_SESSION['last_login_attempt']) < 30) {
         echo "Bạn đã đăng nhập sai quá nhiều lần. Vui lòng thử lại sau 5 phút.";
         exit();
     }
@@ -35,7 +41,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $row = $result->fetch_assoc();
 
         // So sánh password đã mã hóa
-        if ($pass == $row['password'])  {
+        if (password_verify($pass, $row['password'])) {
 
             // Kiểm tra mã OTP 2FA
             $google2fa = new Google2FA();
@@ -52,6 +58,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 // Reset số lần đăng nhập sai
                 $_SESSION['login_attempts'] = 0;
                 $_SESSION['last_login_attempt'] = time();
+                unset($_SESSION['csrf_token']);
+                // Xóa token CSRF sau khi đăng nhập thành công
 
                 echo "Đăng nhập thành công!";
                 header("Location: ../index.php"); // chuyển đến trang chính
@@ -62,14 +70,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $_SESSION['last_login_attempt'] = time();
                 echo "Mã xác thực 2FA không đúng!";
                 // Debug thông tin trước khi kiểm tra 2FA
-                echo "<pre>";
-                echo "Secret Key trong DB: " . htmlspecialchars($secretKey) . "\n";
-                echo "Mã OTP người dùng nhập: " . htmlspecialchars($otp) . "\n";
+                // echo "<pre>";
+                // echo "Secret Key trong DB: " . htmlspecialchars($secretKey) . "\n";
+                // echo "Mã OTP người dùng nhập: " . htmlspecialchars($otp) . "\n";
 
-                $google2fa = new Google2FA();
-                $otp_chinh_xac = $google2fa->getCurrentOtp($secretKey);
-                echo "Mã OTP chính xác hiện tại: " . htmlspecialchars($otp_chinh_xac) . "\n";
-                echo "</pre>";
+                // $google2fa = new Google2FA();
+                // $otp_chinh_xac = $google2fa->getCurrentOtp($secretKey);
+                // echo "Mã OTP chính xác hiện tại: " . htmlspecialchars($otp_chinh_xac) . "\n";
+                // echo "</pre>";
 
             }
 
@@ -79,6 +87,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_SESSION['last_login_attempt'] = time();
             echo "Mật khẩu không đúng!";
             echo "Số lần nhập sai: " . $_SESSION['login_attempts'];
+            // echo "Nhập: $pass<br>";
+            // echo "Hash DB: " . $row['password'] . "<br>";
+            // if (password_verify($pass, $row['password'])) {
+            //     echo "KHỚP<br>";
+            // } else {
+            //     echo "KHÔNG KHỚP<br>";
+            // }
         }
     } else {
         // Tài khoản không tồn tại

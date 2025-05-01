@@ -1,3 +1,10 @@
+<?php
+session_start();
+// Tạo token CSRF nếu chưa có
+if (empty($_SESSION['csrf_token'])) {
+    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -8,8 +15,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.3/TweenMax.min.js"></script>
 
     <link rel="stylesheet" href="style.css" />
-      
-     
     </style>
   </head>
   <body>
@@ -17,7 +22,7 @@
       <?php
       // include("thanhphan/anh.php"); 
       ?>
-
+      <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
       <div class="inputGroup inputGroup1">
         <label for="email1">Usename</label>
         <input type="text" id="usename" name="user" class="email" maxlength="256" value="" />

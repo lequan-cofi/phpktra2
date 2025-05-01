@@ -25,7 +25,7 @@ $(function() {
             success: function(data) {
                 if (data.result) {
                     alert('✅ OTP verified successfully! OTP: ' + data.provided_otp);
-                    window.location.href = '../controllers/2Fa/login.php'; // Redirect to login.php
+                    window.location.href = '../views/login.php'; // Redirect to login.php
                 } else {
                     alert('❌ OTP wrong! Please try again.');
                 }
