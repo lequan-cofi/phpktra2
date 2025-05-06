@@ -4,10 +4,6 @@ require '2Fa/vendor/autoload.php'; // Autoload Composer
 require '../models/connect.php'; // Kết nối database
 
 
-// Kiểm tra token CSRF
-if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
-    die("Yêu cầu không hợp lệ (CSRF token không hợp lệ).");
-}
 
 use PragmaRX\Google2FA\Google2FA;
 
@@ -20,6 +16,11 @@ if (!isset($_SESSION['last_login_attempt'])) {
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Kiểm tra token CSRF
+    if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
+        die("Yêu cầu không hợp lệ (CSRF token không hợp lệ).");
+    }
+
 
     // Nếu vượt quá 5 lần trong 5 phút thì chặn
     if ($_SESSION['login_attempts'] >= 5 && (time() - $_SESSION['last_login_attempt']) < 30) {
